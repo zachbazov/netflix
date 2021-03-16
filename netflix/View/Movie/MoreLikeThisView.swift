@@ -29,6 +29,10 @@ struct MoreLikeThisView: View {
 
 struct MoreLikeThis_Previews: PreviewProvider {
     static var previews: some View {
-        MoreLikeThisView(movies: exampleMovies)
+        ZStack {
+            Color.black
+                .edgesIgnoringSafeArea(.all)
+            MoreLikeThisView(movies: exampleMovies)
+        }
     }
 }

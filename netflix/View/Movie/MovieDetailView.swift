@@ -81,6 +81,7 @@ struct MovieDetailView: View {
                         
                         VStack(spacing: 48) {
                             Spacer()
+                            Spacer()
                             ForEach(0..<(movie.numOfSeasons ?? 0)) { season in
                                 Button(action: {
                                     self.selectedSeason = season + 1
@@ -98,10 +99,10 @@ struct MovieDetailView: View {
                             }, label: {
                                 Image(systemName: "x.circle.fill")
                                     .foregroundColor(.white)
-                                    .font(.system(size: 40))
+                                    .font(.system(size: 48))
                                     .scaleEffect(x: 1.1)
                             })
-                            .padding(.bottom, 32)
+                            .padding(.bottom, 48)
                         }
                     }
                     .edgesIgnoringSafeArea(.all)

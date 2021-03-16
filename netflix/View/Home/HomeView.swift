@@ -40,7 +40,7 @@ struct HomeView: View {
                         .padding(.top, -112)
                         .zIndex(-1)
                     
-                    HomeMoviesStack(homeVM: homeVM, topNavBarSelection: topNavBarSelection, movieDetailToShow: $movieDetailToShow)
+                    HomeMoviesStack(homeVM: homeVM, topNavBarSelection: topNavBarSelection, selectedGenre: homeGenre, movieDetailToShow: $movieDetailToShow)
                 }
             }
             
@@ -50,6 +50,93 @@ struct HomeView: View {
                 MovieDetailView(movie: movieDetailToShow!, movieDetailToShow: $movieDetailToShow)
                     .animation(.easeIn)
                     .transition(.opacity)
+            }
+            
+            // TopNavBar
+            if showTopNavBarSelection {
+                Group {
+                    Color.black.opacity(0.9)
+                    
+                    VStack(spacing: 48) {
+                        
+                        Spacer()
+                        Spacer()
+                        
+                        ForEach(HomeTopNavBar.allCases, id: \.self) { topNavBar in
+                            
+                            Button(action: {
+                                topNavBarSelection = topNavBar
+                                showTopNavBarSelection = false
+                            }, label: {
+                                if topNavBar == topNavBarSelection {
+                                    Text("\(topNavBar.rawValue)")
+                                        .bold()
+                                } else {
+                                    Text("\(topNavBar.rawValue)")
+                                        .foregroundColor(.gray)
+                                }
+                            })
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            showTopNavBarSelection = false
+                        }, label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.system(size: 48))
+                                .scaleEffect(x: 1.1)
+                        })
+                        .padding(.bottom, 48)
+                    }
+                }
+                .edgesIgnoringSafeArea(.all)
+                .font(.title2)
+            }
+            
+            // Genre
+            if showGenreSelection {
+                Group {
+                    Color.black.opacity(0.9)
+                    
+                    VStack(spacing: 48) {
+                        
+                        Spacer()
+                        Spacer()
+                        
+                        ScrollView {
+                            ForEach(homeVM.allGenres, id: \.self) { genre in
+                                
+                                Button(action: {
+                                    homeGenre = genre
+                                    showGenreSelection = false
+                                }, label: {
+                                    if genre == homeGenre {
+                                        Text("\(genre.rawValue)")
+                                            .bold()
+                                    } else {
+                                        Text("\(genre.rawValue)")
+                                            .foregroundColor(.gray)
+                                    }
+                                })
+                                .padding(.bottom, 40)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            showGenreSelection = false
+                        }, label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.system(size: 48))
+                                .scaleEffect(x: 1.1)
+                        })
+                        .padding(.bottom, 48)
+                    }
+                }
+                .edgesIgnoringSafeArea(.all)
+                .font(.title2)
             }
         }
         .foregroundColor(.white)

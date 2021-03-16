@@ -12,6 +12,7 @@ struct HomeMoviesStack: View {
     var homeVM: HomeVM
     
     var topNavBarSelection: HomeTopNavBar
+    var selectedGenre: HomeGenre
     
     @Binding var movieDetailToShow: Movie?
     
@@ -26,7 +27,7 @@ struct HomeMoviesStack: View {
                 }
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
-                        ForEach(homeVM.getMovie(for: category, andHomeTopNavBar: topNavBarSelection)) { movie in
+                        ForEach(homeVM.getMovie(for: category, andHomeTopNavBar: topNavBarSelection, andGenre: selectedGenre)) { movie in
                             StandardHomeMovieView(movie: movie)
                                 .frame(width: 100, height: 200)
                                 .padding(.horizontal, 20)
@@ -47,7 +48,7 @@ struct HomeMoviesStack_Previews: PreviewProvider {
             Color.black
                 .edgesIgnoringSafeArea(.all)
             ScrollView {
-                HomeMoviesStack(homeVM: HomeVM(), topNavBarSelection: .home, movieDetailToShow: .constant(nil))
+                HomeMoviesStack(homeVM: HomeVM(), topNavBarSelection: .home, selectedGenre: .AllGenres, movieDetailToShow: .constant(nil))
             }
             .foregroundColor(.white)
         }
