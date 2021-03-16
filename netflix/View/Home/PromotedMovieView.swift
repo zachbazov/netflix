@@ -33,13 +33,14 @@ struct PromotedMovieView: View {
                     ForEach(movie.categories, id: \.self) { category in
                         HStack {
                             Text(category)
-                                .font(.footnote)
+                                .font(.system(size: 14))
                             if !isCategoryLast(category) {
                                 Image(systemName: "circle.fill")
                                     .foregroundColor(.blue)
                                     .font(.system(size: 3))
                             }
                         }
+                        .padding(.vertical, 8)
                     }
                 }
                 
