@@ -21,13 +21,13 @@ struct SearchBarView: View {
         ZStack(alignment: .leading) {
             
             Color.graySearchBg
-                .frame(width: isEditing == true ? 310 : 200, height: 36)
+                .frame(width: screen.width - 24 - screen.width / 6, height: 36)
                 .cornerRadius(8.0)
             
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Color.graySearchText)
-                    .padding(.leading, 16)
+                    .padding(.leading, 8)
                     .padding(.trailing, 4)
                 
                 TextField("Search", text: $text)
@@ -56,11 +56,11 @@ struct SearchBarView: View {
                             text = ""
                         }, label: {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.graySearchText)
                                 .frame(width: 36, height: 36)
-                                .font(.system(size: 14))
+                                .background(Color.graySearchBg)
+                                .foregroundColor(.graySearchText)
+                                .cornerRadius(8.0)
                         })
-                        .padding(.trailing, 8)
                     }
                 }
                 
