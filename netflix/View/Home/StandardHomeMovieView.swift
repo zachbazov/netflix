@@ -13,15 +13,19 @@ struct StandardHomeMovieView: View {
     var movie: Movie
     
     var body: some View {
-        KFImage(movie.thumbnailURL)
-            .resizable()
-            .scaledToFill()
+        GeometryReader { proxy in
+            KFImage(movie.thumbnailURL)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: proxy.size.width, height: proxy.size.height)
+                .clipped()
+        }
     }
 }
 
 struct StandardHomeMovieView_Previews: PreviewProvider {
     static var previews: some View {
         StandardHomeMovieView(movie: exampleMovie1)
-            //.frame(width: 200, height: 300)
+            //.frame(width: 100, height: 400)
     }
 }

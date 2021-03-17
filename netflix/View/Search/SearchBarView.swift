@@ -9,11 +9,11 @@ import SwiftUI
 
 struct SearchBarView: View {
     
-    @State private var text: String = ""
+    @Binding var text: String
     
     @State private var isEditing = true
     
-    @State private var isLoading = false
+    @Binding var isLoading: Bool
     
     let screen = UIScreen.main.bounds
     
@@ -21,7 +21,7 @@ struct SearchBarView: View {
         ZStack(alignment: .leading) {
             
             Color.graySearchBg
-                .frame(width: screen.width - 24 - screen.width / 6, height: 36)
+                .frame(width: screen.width - screen.width / 5, height: 36)
                 .cornerRadius(8.0)
             
             HStack {
@@ -38,9 +38,7 @@ struct SearchBarView: View {
                     .onTapGesture {
                         isEditing = true
                     }
-                    .onChange(of: text, perform: { value in
-                        isEditing = true
-                    })
+                    .animation(.default)
                 
                 if !text.isEmpty {
                     if isLoading {
@@ -49,7 +47,8 @@ struct SearchBarView: View {
                         }, label: {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                .padding(.trailing, 16)
+                                .frame(width: 36, height: 36)
+                                .padding(.trailing, 2)
                         })
                     } else {
                         Button(action: {
@@ -57,9 +56,7 @@ struct SearchBarView: View {
                         }, label: {
                             Image(systemName: "xmark.circle.fill")
                                 .frame(width: 36, height: 36)
-                                .background(Color.graySearchBg)
                                 .foregroundColor(.graySearchText)
-                                .cornerRadius(8.0)
                         })
                     }
                 }
@@ -73,6 +70,8 @@ struct SearchBarView: View {
                         Text("Cancel")
                             .foregroundColor(.white)
                     })
+                    .transition(.move(edge: .trailing))
+                    .animation(.default)
                 } 
             }
         }
@@ -85,7 +84,7 @@ struct SearchBarView_Previews: PreviewProvider {
         ZStack {
             Color.black
                 .edgesIgnoringSafeArea(.all)
-            SearchBarView()
+            SearchBarView(text: .constant(""), isLoading: .constant(false))
         }
     }
 }

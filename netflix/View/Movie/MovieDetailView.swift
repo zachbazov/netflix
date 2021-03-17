@@ -39,7 +39,7 @@ struct MovieDetailView: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
                             StandardHomeMovieView(movie: movie)
-                                .frame(width: screen.width / 2.5)
+                                .frame(width: screen.width / 1.5, height: 296)
                             MovieDetailSubHeadlineView(movie: movie)
                             if movie.promotionHeadline != nil {
                                 Text(movie.promotionHeadline!)
