@@ -40,6 +40,8 @@ struct HomeView: View {
                         .padding(.top, -112)
                         .zIndex(-1)
                     
+                    MoviewPreviewRowView(movies: exampleMovies)
+                    
                     HomeMoviesStack(homeVM: homeVM, topNavBarSelection: topNavBarSelection, selectedGenre: homeGenre, movieDetailToShow: $movieDetailToShow)
                 }
             }
