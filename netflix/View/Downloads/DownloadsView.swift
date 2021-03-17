@@ -47,7 +47,7 @@ struct DownloadsView: View {
                     Text("Download shows and movies so you'll\nnever be without something to watch --\n even when you're offline.")
                         .multilineTextAlignment(.center)
                     Button(action: {
-                        
+                        //
                     }, label: {
                         Text("See what you can download")
                             .foregroundColor(.black)

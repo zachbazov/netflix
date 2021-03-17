@@ -82,16 +82,6 @@ struct ComingSoonView: View {
                         self.navBarHidden = false
                     })
             }
-            
-            //                VStack {
-            //                    Text("\(scrollOffset)")
-            //                        .background(Color.red)
-            //                        .font(.title)
-            //                    Text("\(activeIndex)")
-            //                        .background(Color.blue)
-            //                        .font(.title)
-            //                }
-            
         }
     }
 }
