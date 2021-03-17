@@ -19,25 +19,28 @@ struct HomeMoviesStack: View {
     var body: some View {
         ForEach(homeVM.allCategories, id: \.self) { category in
             VStack {
+                
                 HStack {
                     Text(category)
                         .font(.title3)
                         .bold()
                     Spacer()
                 }
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
                         ForEach(homeVM.getMovie(for: category, andHomeTopNavBar: topNavBarSelection, andGenre: selectedGenre)) { movie in
                             StandardHomeMovieView(movie: movie)
-                                .frame(width: 112, height: 160)
-                                .padding(.horizontal, 8)
+                                .frame(width: 136, height: 160)
                                 .onTapGesture {
                                     movieDetailToShow = movie
                                 }
                         }
                     }
                 }
+                
             }
+            .padding(.leading, 8)
         }
     }
 }
