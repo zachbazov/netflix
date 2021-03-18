@@ -197,7 +197,8 @@ let exampleMovie7 = Movie(
     previewVideoURL: exampleVideoURL)
 
 var exampleMovies: [Movie] {
-    return [exampleMovie1, exampleMovie2, exampleMovie3, exampleMovie4, exampleMovie5, exampleMovie6].shuffled()
+    return [exampleMovie1, exampleMovie2, exampleMovie3, exampleMovie4, exampleMovie5, exampleMovie6]
+        //.shuffled()
 }
 
 let exampleEpisodeInfo1 = CurrentEpisodeInfo(episodeName: "Beginnings and Endings", description: "Six months after the disappearance, the police form a task force. in 2052, Jonas learns that most of Winden perished in apocalyptic event.", season: 2, episode: 1)
