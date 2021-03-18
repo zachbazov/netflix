@@ -13,6 +13,9 @@ struct ContentView: View {
     @State private var previewStartingIndex = 0
     
     @State private var previewCurrentPos: CGFloat = UIScreen.main.bounds.height
+    @State private var previewNewPos: CGFloat = UIScreen.main.bounds.height
+    
+    @State private var previewHorizontalDragActive = false
     
     let screen = UIScreen.main.bounds
     
@@ -22,7 +25,75 @@ struct ContentView: View {
     }
     
     var body: some View {
-        ZStack {
+        
+        let previewDragGesture = DragGesture(minimumDistance: 20)
+            .onChanged { value in
+                
+                // Checks if the user drags horizontally
+                if previewHorizontalDragActive {
+                    return
+                }
+                
+                // Checks if the user is somewhere in the middle point,
+                // If we drag more horizontally than vertically,
+                // set horizontal draggins to true.
+                if previewCurrentPos == .zero {
+                    if abs(value.translation.width) > abs(value.translation.height) {
+                        previewHorizontalDragActive = true
+                        return
+                    }
+                }
+                
+                // Vertical Dragging
+                let shouldBePos = value.translation.height + self.previewNewPos
+                
+                // In case the user tries to drag up.
+                if shouldBePos < 0 {
+                    return
+                } else {
+                    self.previewCurrentPos = shouldBePos
+                }
+                
+                
+            }
+            .onEnded { value in
+                
+                // If it was an horizontal drag, turn off, so it doesn't impact the vertical drag.
+                if previewHorizontalDragActive {
+                    previewHorizontalDragActive = false
+                    return
+                }
+                
+                // The snap functionallity
+                // Where the user's finger left the view.
+                let shouldBePos = value.translation.height + self.previewNewPos
+                
+                // Dragging up check case and closing point for the view to actually be snapped.
+                if shouldBePos < 0 {
+                    self.previewCurrentPos = .zero
+                    self.previewNewPos = .zero
+                } else {
+                    let closingPoint = screen.size.height * 0.2
+                    
+                    if shouldBePos > closingPoint {
+                        withAnimation {
+                            self.showPreviewFullScreen = false
+                            self.previewCurrentPos = screen.height + 32
+                            self.previewNewPos = screen.height + 32
+                        }
+                    } else {
+                        withAnimation {
+                            self.previewNewPos = .zero
+                            self.previewCurrentPos = .zero
+                        }
+                    }
+                }
+                
+                previewHorizontalDragActive = false
+                
+            }
+        
+        return ZStack {
             TabView {
                 HomeView(
                     showPreviewFullScreen: $showPreviewFullScreen,
@@ -62,7 +133,7 @@ struct ContentView: View {
             PreviewListView(
                 movies: exampleMovies,
                 currentSelection: $previewStartingIndex,
-                isVisible: $showPreviewFullScreen)
+                isVisible: $showPreviewFullScreen, externalDragGesture: previewDragGesture)
                 .offset(y: previewCurrentPos)
                 /// If `showPreviewFullScreen` set to true, then the preview is not hidden.
                 /// Set to false, then the preview is hidden.
@@ -75,11 +146,13 @@ struct ContentView: View {
                 // show
                 withAnimation {
                     previewCurrentPos = .zero
+                    previewNewPos = .zero
                 }
             } else {
                 // hide
                 withAnimation {
-                    previewCurrentPos = screen.height + 32
+                    self.previewCurrentPos = screen.height + 32
+                    self.previewNewPos = screen.height + 32
                 }
             }
         })
