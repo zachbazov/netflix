@@ -11,6 +11,9 @@ struct MoviewPreviewRowView: View {
     
     var movies: [Movie]
     
+    @Binding var showPreviewFullScreen: Bool
+    @Binding var previewStartingIndex: Int
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Previews")
@@ -25,9 +28,13 @@ struct MoviewPreviewRowView: View {
                         let movie = movies[movieIndex]
                         
                         MoviePreviewCell(movie: movie)
-                            .frame(width: 128, height: 128)
+                            .frame(width: 128, height: 136)
                             .padding(.trailing, 16)
                             .padding(.leading, 8)
+                            .onTapGesture {
+                                previewStartingIndex = movieIndex
+                                showPreviewFullScreen = true
+                            }
                     }
                     
                 }
@@ -42,7 +49,7 @@ struct MoviewPreviewRowView_Previews: PreviewProvider {
         ZStack {
             Color.black
                 .edgesIgnoringSafeArea(.all)
-            MoviewPreviewRowView(movies: exampleMovies)
+            MoviewPreviewRowView(movies: exampleMovies, showPreviewFullScreen: .constant(false), previewStartingIndex: .constant(0))
         }
     }
 }

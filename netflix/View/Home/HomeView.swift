@@ -21,6 +21,9 @@ struct HomeView: View {
     @State private var showGenreSelection = false
     @State private var showTopNavBarSelection = false
     
+    @Binding var showPreviewFullScreen: Bool
+    @Binding var previewStartingIndex: Int
+    
     var body: some View {
         ZStack {
             Color.black
@@ -40,9 +43,18 @@ struct HomeView: View {
                         .padding(.top, -112)
                         .zIndex(-1)
                     
-                    MoviewPreviewRowView(movies: exampleMovies)
+                    MoviewPreviewRowView(
+                        movies: exampleMovies,
+                        showPreviewFullScreen: $showPreviewFullScreen,
+                        previewStartingIndex: $previewStartingIndex)
                     
-                    HomeMoviesStack(homeVM: homeVM, topNavBarSelection: topNavBarSelection, selectedGenre: homeGenre, movieDetailToShow: $movieDetailToShow)
+                    HomeMoviesStack(
+                        homeVM: homeVM,
+                        topNavBarSelection: topNavBarSelection,
+                        selectedGenre: homeGenre,
+                        movieDetailToShow: $movieDetailToShow,
+                        showPreviewFullScreen: $showPreviewFullScreen,
+                        previewStartingIndex: $previewStartingIndex)
                 }
             }
             
@@ -147,7 +159,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(showPreviewFullScreen: .constant(false), previewStartingIndex: .constant(0))
     }
 }
 
