@@ -26,6 +26,7 @@ struct Movie: Identifiable {
     var defaultEpisodeInfo: CurrentEpisodeInfo
     var creators: String
     var cast: String
+    var accentColor: Color? = .white
     
     // MoreLikeThis
     var moreLikeThisMovies: [Movie]

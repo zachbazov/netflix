@@ -68,7 +68,7 @@ func generateTrailers(_ count: Int) -> [Trailer] {
         let randThumbnail = Int.random(in: 0...9)
         let thumbnail = URL(string: "https://picsum.photos/300/10\(randThumbnail)")!
         
-        let trailer = Trailer(id: id, name: name, videoURL: exampleVideoURL, ThumbnailImageURL: thumbnail)
+        let trailer = Trailer(id: id, name: name, videoURL: exampleVideoURL, thumbnailImageURL: thumbnail)
         allTrailers.append(trailer)
     }
     

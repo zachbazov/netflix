@@ -10,7 +10,7 @@ import SwiftUI
 
 // CMD+OPT+CTRL+F - Fills the missing params.
 
-let exampleVideoURL = URL(string: "https://www.radiantmediaplayer.com/media/big-bug-bunny-360p.mp4")!
+let exampleVideoURL = URL(string: "https://www.radiantmediaplayer.com/media/big-buck-bunny-360p.mp4")!
 
 let exampleImageURL1 = URL(string: "https://picsum.photos/300/104")!
 let exampleImageURL2 = URL(string: "https://picsum.photos/300/105")!
@@ -20,9 +20,9 @@ var randomExampleImageURL: URL {
     return [exampleImageURL1, exampleImageURL2, exampleImageURL3].randomElement() ?? exampleImageURL1
 }
 
-let exampleTrailer1 = Trailer(name: "Season 3 Trailer", videoURL: exampleVideoURL, ThumbnailImageURL: exampleImageURL1)
-let exampleTrailer2 = Trailer(name: "The Hero's Journey", videoURL: exampleVideoURL, ThumbnailImageURL: exampleImageURL2)
-let exampleTrailer3 = Trailer(name: "The Mysterious", videoURL: exampleVideoURL, ThumbnailImageURL: exampleImageURL3)
+let exampleTrailer1 = Trailer(name: "Season 3 Trailer", videoURL: exampleVideoURL, thumbnailImageURL: exampleImageURL1)
+let exampleTrailer2 = Trailer(name: "The Hero's Journey", videoURL: exampleVideoURL, thumbnailImageURL: exampleImageURL2)
+let exampleTrailer3 = Trailer(name: "The Mysterious", videoURL: exampleVideoURL, thumbnailImageURL: exampleImageURL3)
 
 let exampleTrailers = [exampleTrailer1, exampleTrailer2, exampleTrailer3]
 
@@ -89,6 +89,7 @@ let exampleMovie1 = Movie(
     defaultEpisodeInfo: exampleEpisodeInfo1,
     creators: "Baran bo Odan, Jantje Friese",
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
+    accentColor: Color.blue,
     moreLikeThisMovies: [exampleMovie2, exampleMovie3, exampleMovie4, exampleMovie5, exampleMovie6, exampleMovie7],
     episodes: allExampleEpisodes,
     trailers: exampleTrailers,
