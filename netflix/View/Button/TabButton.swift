@@ -24,6 +24,7 @@ struct TabButton: View {
         }
     }
     
+    var color: Color = .white
     
     
     var action: () -> Void
@@ -32,11 +33,11 @@ struct TabButton: View {
         Button(action: action, label: {
             VStack {
                 Image(systemName: imageName ?? image)
-                    .foregroundColor(.white)
+                    .foregroundColor(color)
                     .padding(.bottom, 2)
                 
                 Text(text)
-                    .foregroundColor(.white)
+                    .foregroundColor(color)
                     .font(.system(size: 14))
                     .bold()
             }

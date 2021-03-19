@@ -10,7 +10,7 @@ import SwiftUI
 
 // CMD+OPT+CTRL+F - Fills the missing params.
 
-let exampleVideoURL = URL(string: "https://www.radiantmediaplayer.com/media/big-bug-bunny-360p.mp4")!
+let exampleVideoURL = URL(string: "https://www.radiantmediaplayer.com/media/big-buck-bunny-360p.mp4")!
 
 let exampleImageURL1 = URL(string: "https://picsum.photos/300/104")!
 let exampleImageURL2 = URL(string: "https://picsum.photos/300/105")!
@@ -20,9 +20,9 @@ var randomExampleImageURL: URL {
     return [exampleImageURL1, exampleImageURL2, exampleImageURL3].randomElement() ?? exampleImageURL1
 }
 
-let exampleTrailer1 = Trailer(name: "Season 3 Trailer", videoURL: exampleVideoURL, ThumbnailImageURL: exampleImageURL1)
-let exampleTrailer2 = Trailer(name: "The Hero's Journey", videoURL: exampleVideoURL, ThumbnailImageURL: exampleImageURL2)
-let exampleTrailer3 = Trailer(name: "The Mysterious", videoURL: exampleVideoURL, ThumbnailImageURL: exampleImageURL3)
+let exampleTrailer1 = Trailer(name: "Season 3 Trailer", videoURL: exampleVideoURL, thumbnailImageURL: exampleImageURL1)
+let exampleTrailer2 = Trailer(name: "The Hero's Journey", videoURL: exampleVideoURL, thumbnailImageURL: exampleImageURL2)
+let exampleTrailer3 = Trailer(name: "The Mysterious", videoURL: exampleVideoURL, thumbnailImageURL: exampleImageURL3)
 
 let exampleTrailers = [exampleTrailer1, exampleTrailer2, exampleTrailer3]
 
@@ -89,9 +89,12 @@ let exampleMovie1 = Movie(
     defaultEpisodeInfo: exampleEpisodeInfo1,
     creators: "Baran bo Odan, Jantje Friese",
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
+    accentColor: Color.blue,
     moreLikeThisMovies: [exampleMovie2, exampleMovie3, exampleMovie4, exampleMovie5, exampleMovie6, exampleMovie7],
     episodes: allExampleEpisodes,
-    trailers: exampleTrailers)
+    trailers: exampleTrailers,
+    previewImageName: "travelersPreview",
+    previewVideoURL: exampleVideoURL)
 let exampleMovie2 = Movie(
     id: UUID().uuidString,
     name: "Travelers",
@@ -106,7 +109,9 @@ let exampleMovie2 = Movie(
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
     moreLikeThisMovies: [],
     promotionHeadline: "Best Rated Show",
-    trailers: exampleTrailers)
+    trailers: exampleTrailers,
+    previewImageName: "darkPreview",
+    previewVideoURL: exampleVideoURL)
 let exampleMovie3 = Movie(
     id: UUID().uuidString,
     name: "Community",
@@ -121,7 +126,9 @@ let exampleMovie3 = Movie(
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
     moreLikeThisMovies: [],
     promotionHeadline: "New episodes coming soon!",
-    trailers: exampleTrailers)
+    trailers: exampleTrailers,
+    previewImageName: "dirtyJohnPreview",
+    previewVideoURL: exampleVideoURL)
 let exampleMovie4 = Movie(
     id: UUID().uuidString,
     name: "Alone",
@@ -135,7 +142,9 @@ let exampleMovie4 = Movie(
     creators: "Baran bo Odan, Jantje Friese",
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
     moreLikeThisMovies: [],
-    trailers: exampleTrailers)
+    trailers: exampleTrailers,
+    previewImageName: "ozarkPreview",
+    previewVideoURL: exampleVideoURL)
 let exampleMovie5 = Movie(
     id: UUID().uuidString,
     name: "Hannibal",
@@ -149,7 +158,9 @@ let exampleMovie5 = Movie(
     creators: "Baran bo Odan, Jantje Friese",
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
     moreLikeThisMovies: [],
-    trailers: exampleTrailers)
+    trailers: exampleTrailers,
+    previewImageName: "travelersPreview",
+    previewVideoURL: exampleVideoURL)
 let exampleMovie6 = Movie(
     id: UUID().uuidString,
     name: "After Life",
@@ -164,7 +175,9 @@ let exampleMovie6 = Movie(
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
     moreLikeThisMovies: [],
     promotionHeadline: "Watch Season 6 Now",
-    trailers: exampleTrailers)
+    trailers: exampleTrailers,
+    previewImageName: "whiteLinesPreview",
+    previewVideoURL: exampleVideoURL)
 let exampleMovie7 = Movie(
     id: UUID().uuidString,
     name: "After Life",
@@ -179,10 +192,13 @@ let exampleMovie7 = Movie(
     cast: "Louis Hoffmann, Oliver Masucci, Jordis Triebel",
     moreLikeThisMovies: [],
     promotionHeadline: "Watch Season 6 Now",
-    trailers: exampleTrailers)
+    trailers: exampleTrailers,
+    previewImageName: "arrestedDevPreview",
+    previewVideoURL: exampleVideoURL)
 
 var exampleMovies: [Movie] {
-    return [exampleMovie1, exampleMovie2, exampleMovie3, exampleMovie4, exampleMovie5, exampleMovie6].shuffled()
+    return [exampleMovie1, exampleMovie2, exampleMovie3, exampleMovie4, exampleMovie5, exampleMovie6]
+        //.shuffled()
 }
 
 let exampleEpisodeInfo1 = CurrentEpisodeInfo(episodeName: "Beginnings and Endings", description: "Six months after the disappearance, the police form a task force. in 2052, Jonas learns that most of Winden perished in apocalyptic event.", season: 2, episode: 1)
@@ -227,5 +243,28 @@ extension Color {
             blue:  Double(b) / 255,
             opacity: Double(a) / 255
         )
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+extension View {
+    /// Hide or show the view based on a boolean.
+    ///
+    /// - Parameters:
+    ///   - hidden: Set to `false` to show the view. Set to `true` to hide the view.
+    ///   - remove: Boolean value indicating whether or not remove the view.
+    @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
+        if hidden {
+            if !remove {
+                self.hidden()
+            }
+        } else {
+            self
+        }
     }
 }

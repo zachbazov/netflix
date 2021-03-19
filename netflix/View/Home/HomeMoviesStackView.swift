@@ -16,28 +16,34 @@ struct HomeMoviesStack: View {
     
     @Binding var movieDetailToShow: Movie?
     
+    @Binding var showPreviewFullScreen: Bool
+    @Binding var previewStartingIndex: Int
+    
     var body: some View {
         ForEach(homeVM.allCategories, id: \.self) { category in
             VStack {
+                
                 HStack {
                     Text(category)
                         .font(.title3)
                         .bold()
                     Spacer()
                 }
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
                         ForEach(homeVM.getMovie(for: category, andHomeTopNavBar: topNavBarSelection, andGenre: selectedGenre)) { movie in
                             StandardHomeMovieView(movie: movie)
-                                .frame(width: 100, height: 200)
-                                .padding(.horizontal, 20)
+                                .frame(width: 136, height: 160)
                                 .onTapGesture {
                                     movieDetailToShow = movie
                                 }
                         }
                     }
                 }
+                
             }
+            .padding(.leading, 8)
         }
     }
 }
@@ -48,7 +54,7 @@ struct HomeMoviesStack_Previews: PreviewProvider {
             Color.black
                 .edgesIgnoringSafeArea(.all)
             ScrollView {
-                HomeMoviesStack(homeVM: HomeVM(), topNavBarSelection: .home, selectedGenre: .AllGenres, movieDetailToShow: .constant(nil))
+                HomeMoviesStack(homeVM: HomeVM(), topNavBarSelection: .home, selectedGenre: .AllGenres, movieDetailToShow: .constant(nil), showPreviewFullScreen: .constant(false), previewStartingIndex: .constant(0))
             }
             .foregroundColor(.white)
         }
